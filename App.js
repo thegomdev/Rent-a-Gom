@@ -1,20 +1,44 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-export default function App() {
+// Home
+import Home from './src/screens/Home';
+
+// Viaturas
+import Viaturas from './src/screens/Viaturas';
+
+const Stack = createNativeStackNavigator();
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+    <NavigationContainer>
+      <Stack.Navigator>
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
+        {/* Tela Home */}
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        {/* Tela Viaturas */}
+        <Stack.Screen
+        name="Viaturas"
+        component={Viaturas}
+        options={{
+          headerShown: false,
+        }}
+        />
+
+
+
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
+export default App;
