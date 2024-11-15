@@ -7,6 +7,7 @@ import Home from './src/screens/Home';
 
 // Viaturas
 import Viaturas from './src/screens/Viaturas';
+import CadastroViatura from './src/screens/Viaturas/CadastroViatura';
 
 const Stack = createNativeStackNavigator();
 
@@ -27,11 +28,19 @@ const App = () => {
 
         {/* Tela Viaturas */}
         <Stack.Screen
-        name="Viaturas"
-        component={Viaturas}
-        options={{
-          headerShown: false,
-        }}
+          name="Viaturas"
+          component={Viaturas}
+          options={{
+            headerShown: false,
+          }}
+        />
+        {/* Tela Cadastro Viatura */}
+        <Stack.Screen
+          name="CadastroViatura"
+          component={CadastroViatura}
+          options={{
+            headerShown: false,
+          }}
         />
 
 
