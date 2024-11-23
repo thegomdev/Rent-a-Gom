@@ -18,7 +18,7 @@ const CadastroViaturas = () => {
     async function handleCadastro() {
         // Validando para nenhum campo ficar vazio.
         if (marca !== '' && modelo !== '' && matricula !== '' && ano !== '' && kms !== '') {
-            
+
 
             // Referência para o nó 'Viaturas' no Realtime Database.
             const cadastroViaturaRef = ref(database, 'Viaturas');
@@ -27,11 +27,11 @@ const CadastroViaturas = () => {
 
             // Salva os dados no Realtime Database, usa o set para armazenar dentro de cada key unica gerada.
             await set(newCadastroViaturaRef, {
-                marca: marca,
-                modelo: modelo,
-                matricula: matricula,
-                ano: ano,
-                kms: kms,
+                Marca: marca,
+                Modelo: modelo,
+                Matrícula: matricula,
+                Ano: ano,
+                Kms: kms,
             });
 
             Toast.show({
@@ -69,18 +69,19 @@ const CadastroViaturas = () => {
 
             <View style={styles.top}>
                 <View>
-                    <View>
-                        <TouchableOpacity style={styles.voltarTop}
-                            onPress={() => navigation.navigate('Home')}>
-                            <Feather name="home" size={30} color={"#000"} />
-                        </TouchableOpacity>
-                    </View>
-                    <Text>Cadastro</Text>
+                    <TouchableOpacity style={styles.voltarTop}
+                        onPress={() => navigation.goBack()}>
+                        <Feather name="corner-down-left" size={30} color={"#CB6040"} />
+                    </TouchableOpacity>
                 </View>
             </View>
 
             <ScrollView style={styles.scroll}>
                 <View style={styles.main}>
+
+                    <View>
+                        <Text style={styles.titleCadastro}>Cadastro de viaturas</Text>
+                    </View>
 
 
                     {/* Marca da viatura */}
@@ -92,7 +93,7 @@ const CadastroViaturas = () => {
                             value={marca}
                             onChangeText={(text) => setMarca(text)}
                             maxLength={15}
-                            placeholderTextColor="#A020F0"
+                            placeholderTextColor="#FD8B51"
                         />
                     </View>
 
@@ -106,21 +107,21 @@ const CadastroViaturas = () => {
                             value={modelo}
                             onChangeText={(text) => setModelo(text)}
                             maxLength={15}
-                            placeholderTextColor="#A020F0"
+                            placeholderTextColor="#FD8B51"
                         />
                     </View>
 
 
                     {/* Matricula */}
                     <View style={styles.inputs}>
-                        <Text>Matricula</Text>
+                        <Text>Matrícula</Text>
                         <TextInput
                             style={styles.textInput}
-                            placeholder="Matricula"
+                            placeholder="Matrícula"
                             value={matricula}
                             onChangeText={(text) => setMatricula(text)}
                             maxLength={15}
-                            placeholderTextColor="#A020F0"
+                            placeholderTextColor="#FD8B51"
                         />
                     </View>
 
@@ -134,7 +135,7 @@ const CadastroViaturas = () => {
                             value={ano}
                             onChangeText={(text) => setAno(text)}
                             maxLength={15}
-                            placeholderTextColor="#A020F0"
+                            placeholderTextColor="#FD8B51"
                             keyboardType="numeric"
                         />
                     </View>
@@ -149,7 +150,7 @@ const CadastroViaturas = () => {
                             value={kms}
                             onChangeText={(text) => setKms(text)}
                             maxLength={15}
-                            placeholderTextColor="#A020F0"
+                            placeholderTextColor="#FD8B51"
                             keyboardType="numeric"
                         />
                     </View>
@@ -163,7 +164,7 @@ const CadastroViaturas = () => {
 
                 </View>
             </ScrollView>
-            
+
         </View>
     );
 };
@@ -174,14 +175,30 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        marginTop: 40,
         width: '100%',
+    },
+
+    top: {
+        backgroundColor: '#257180',
+        width: '100%',
+        height: '8%',
+    },
+
+    voltarTop: {
+        marginTop: '38',
+        marginLeft: 10,
     },
 
     scroll: {
         flex: 1,
-        backgroundColor: '#ffc52c',
+        backgroundColor: '#F2E5BF',
         width: '100%',
+    },
+
+    titleCadastro: {
+        marginBottom: 30,
+        fontSize: 35,
+        fontWeight: 'bold',
     },
 
     main: {
@@ -208,12 +225,12 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        borderWidth: 1,
+        borderWidth: 2,
         width: '30%',
         alignItems: 'center',
         height: 30,
         marginTop: 15,
-        borderColor: '#030d4f',
+        borderColor: '#CB6040',
         borderRadius: 6,
     },
 

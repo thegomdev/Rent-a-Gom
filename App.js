@@ -9,6 +9,7 @@ import Home from './src/screens/Home';
 // Viaturas
 import Viaturas from './src/screens/Viaturas';
 import CadastroViatura from './src/screens/Viaturas/CadastroViatura';
+import EditarViatura from './src/screens/Viaturas/EditarViatura';
 
 const Stack = createNativeStackNavigator();
 
@@ -35,6 +36,7 @@ const App = () => {
             headerShown: false,
           }}
         />
+
         {/* Tela Cadastro Viatura */}
         <Stack.Screen
           name="CadastroViatura"
@@ -44,12 +46,21 @@ const App = () => {
           }}
         />
 
+        {/* Tela Editar Viatura */}
+        <Stack.Screen
+          name="EditarViatura"
+          component={EditarViatura}
+          options={{
+            headerShown: false,
+          }}
+        />
+
 
 
       </Stack.Navigator>
 
-            {/* Toast para exibir notificações */}
-            <Toast />
+      {/* Toast para exibir notificações */}
+      <Toast />
     </NavigationContainer>
   );
 };

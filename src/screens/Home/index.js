@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     width: '100%',
+    backgroundColor: '#F2E5BF',
   },
 
   top: {
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
   text1: {
     fontSize: 60,
     fontWeight: 'bold',
-    color: '#00435b',
+    color: '#257180',
   },
 
   bottons: {
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
   viaturas: {
     width: '50%',
     alignItems: 'center',
-    backgroundColor: '#22647e',
+    backgroundColor: '#CB6040',
     borderRadius: 6,
     height: 60,
   },
