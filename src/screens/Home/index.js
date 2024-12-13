@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     width: '100%',
-    backgroundColor: '#F2E5BF',
+    backgroundColor: '#1C325B',
   },
 
   top: {
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   text1: {
     fontSize: 60,
     fontWeight: 'bold',
-    color: '#257180',
+    color: '#FFF',
   },
 
   bottons: {
@@ -60,15 +60,15 @@ const styles = StyleSheet.create({
   viaturas: {
     width: '50%',
     alignItems: 'center',
-    backgroundColor: '#CB6040',
-    borderRadius: 6,
+    backgroundColor: '#73EC8B',
+    borderRadius: 15,
     height: 60,
   },
 
   textViaturas: {
     fontSize: 30,
     fontWeight: 'bold',
-    color: 'white',
+    color: '#FFF',
     marginTop: 13,
   },
 

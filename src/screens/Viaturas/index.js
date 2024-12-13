@@ -62,15 +62,16 @@ const Viaturas = () => {
                 <View style={styles.voltar}>
                     <TouchableOpacity
                         onPress={() => navigation.goBack()}>
-                        <Feather name="corner-down-left" size={25} color={'#CB6040'} />
+                        <Feather name="corner-down-left" size={25} color={'#73EC8B'} />
                     </TouchableOpacity>
                 </View>
 
                 <View style={styles.search}>
-                    <Feather name="search" size={25} color={'#CB6040'} />
+                    <Feather name="search" size={20} color={'#73EC8B'} />
                     <TextInput
                         style={styles.search2}
                         placeholder="Pesquisar"
+                        placeholderTextColor="#FFF"
                         value={searchQuery}
                         onChangeText={(text) => setSearchQuery(text)} // Atualiza o texto de pesquisa.
                     />
@@ -79,7 +80,7 @@ const Viaturas = () => {
                 <View>
                     <TouchableOpacity style={styles.plusViatura}
                         onPress={() => navigation.navigate('CadastroViatura')}>
-                        <Feather name="plus-circle" size={30} color={"#CB6040"} />
+                        <Feather name="plus-circle" size={30} color={"#73EC8B"} />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         width: '100%',
-        backgroundColor: '#F2E5BF',
+        backgroundColor: '#1C325B',
     },
 
     // Estilos do top.
@@ -128,7 +129,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingTop: 10,
         paddingBottom: 10,
-        backgroundColor: '#257180',
         height: '10%'
     },
 
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         alignItems: 'center',
         width: '100%',
-        height: '100%'
+        height: '100%',
     },
 
     search: {
@@ -153,10 +153,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderStyle: 'solid',
         borderRadius: 10,
+        borderWidth: 1,
         width: '70%',
-        backgroundColor: '#F2E5BF',
+        backgroundColor: '#1C325B',
         padding: 5,
         marginTop: 35,
+        borderColor: '#73EC8B',
     },
 
     plusViatura: {
@@ -172,19 +174,21 @@ const styles = StyleSheet.create({
     },
 
     flatEdit: {
-        width: '70%',
+        width: '80%',
     },
 
     viaturaItem: {
-        borderWidth: 1,
-        borderColor: '#CB6040',
+        backgroundColor: '#FFF',
         width: '100%',
         padding: 10,
         marginTop: 15,
+        borderRadius: 15,
     },
 
     viaturaText: {
-        fontSize: 20,
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#1C325B'
     },
 
 });
