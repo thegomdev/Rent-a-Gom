@@ -141,40 +141,42 @@ const styles = StyleSheet.create({
 
     container: {
         flex: 1,
-        alignItems: 'center',
         justifyContent: 'center', // Centraliza o conteúdo verticalmente.
+        alignItems: 'center',
+        backgroundColor: '#1C325B',
         width: '100%',
+    },
+
+    // Top Styles.
+    top: {
+        width: '100%',
+        height: '12%',
         backgroundColor: '#1C325B',
     },
 
     scroll: {
         flex: 1,
-        backgroundColor: "#1C325B",
-        width: "100%",
-    },
-
-    top: {
-        backgroundColor: '#1C325B',
         width: '100%',
-        height: '12%',
+        backgroundColor: "#1C325B",
     },
 
     voltarTop: {
-        marginTop: 40,
         marginLeft: 10,
+        marginTop: 40,
     },
 
+    // Main Styles.
     main: {
-        width: "80%",
-        alignItems: "center", // Centraliza os itens no eixo horizontal.
-        justifyContent: "center", // Garante alinhamento interno centralizado.
+        width: '80%',
+        alignSelf: 'center', // Centraliza o próprio main.
+        alignItems: 'center', // Centraliza os itens no eixo horizontal.
+        justifyContent: 'center', // Garante alinhamento interno centralizado.
         borderRadius: 20,
-        alignSelf: "center", // Centraliza o próprio main.
     },
 
     form: {
+        alignItems: 'center',
         width: '100%',
-        alignItems: 'center'
     },
 
     text: {
@@ -184,40 +186,41 @@ const styles = StyleSheet.create({
     },
 
     input: {
+        width: '90%',
         borderWidth: 1,
-        borderColor: '#73EC8B',
         padding: 10,
         marginBottom: 15,
         borderRadius: 5,
-        width: '90%',
         color: '#FFF',
+        borderColor: '#73EC8B',
     },
 
+    // Buttons Styles.
     buttons: {
         width: '100%',
         alignItems: 'center',
     },
 
     button: {
-        backgroundColor: '#73EC8B',
-        padding: 15,
-        alignItems: 'center',
-        borderRadius: 5,
         width: '60%',
+        alignItems: 'center',
+        padding: 15,
+        borderRadius: 5,
+        backgroundColor: '#73EC8B',
     },
 
     buttonText: {
-        color: '#1C325B',
         fontSize: 18,
+        color: '#1C325B',
     },
 
     buttonDelete: {
-        backgroundColor: '#CB6040',
-        padding: 15,
+        width: '40%',
         alignItems: 'center',
+        padding: 15,
         borderRadius: 5,
         marginTop: 10,
-        width: '40%',
+        backgroundColor: '#CB6040',
     },
 });
 

@@ -11,6 +11,14 @@ import Viaturas from './src/screens/Viaturas';
 import CadastroViatura from './src/screens/Viaturas/CadastroViatura';
 import EditarViatura from './src/screens/Viaturas/EditarViatura';
 
+// Movimentações
+import Movimentacoes from './src/screens/Movimentacoes';
+
+// Ajustes
+import Ajustes from './src/screens/Ajustes';
+import Drivers from './src/screens/Ajustes/Drivers';
+import Locais from './src/screens/Ajustes/Locais';
+
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -53,6 +61,46 @@ const App = () => {
           options={{
             headerShown: false,
           }}
+        />
+
+        {/* Tela Movimentações */}
+        <Stack.Screen
+          name="Movimentacoes"
+          component={Movimentacoes}
+          options={
+            {
+              headerShown: false,
+            }}
+        />
+
+        {/* Tela Ajustes */}
+        <Stack.Screen
+          name="Ajustes"
+          component={Ajustes}
+          options={
+            {
+              headerShown: false,
+            }}
+        />
+
+        {/* Tela Drivers */}
+        <Stack.Screen
+          name="Drivers"
+          component={Drivers}
+          options={
+            {
+              headerShown: false,
+            }}
+        />
+
+        {/* Tela Locais */}
+        <Stack.Screen
+          name="Locais"
+          component={Locais}
+          options={
+            {
+              headerShown: false,
+            }}
         />
 
 

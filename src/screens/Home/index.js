@@ -15,9 +15,24 @@ const Home = () => {
 
       <View style={styles.bottons}>
 
-        <View style={styles.viewViaturas}>
-          <TouchableOpacity style={styles.viaturas} onPress={() => navigation.navigate('Viaturas')}>
-            <Text style={styles.textViaturas}>Viaturas</Text>
+        {/* Button Viaturas */}
+        <View style={styles.viewButtons}>
+          <TouchableOpacity style={styles.buttonSingle} onPress={() => navigation.navigate('Viaturas')}>
+            <Text style={styles.textButtons}>Viaturas</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Button Movimentações */}
+        <View style={styles.viewButtons}>
+          <TouchableOpacity style={styles.buttonSingle} onPress={() => navigation.navigate('Movimentacoes')}>
+            <Text style={styles.textButtons}>Movimentações</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Button Ajustes */}
+        <View style={styles.viewButtons}>
+          <TouchableOpacity style={styles.buttonSingle} onPress={() => navigation.navigate('Ajustes')}>
+            <Text style={styles.textButtons}>Ajustes</Text>
           </TouchableOpacity>
         </View>
 
@@ -52,24 +67,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  viewViaturas: {
+  viewButtons: {
     width: '100%',
     alignItems: 'center'
   },
 
-  viaturas: {
+  buttonSingle: {
     width: '50%',
     alignItems: 'center',
     backgroundColor: '#73EC8B',
     borderRadius: 15,
     height: 60,
+    marginBottom: 15,
   },
 
-  textViaturas: {
-    fontSize: 30,
+  textButtons: {
+    fontSize: 25,
     fontWeight: 'bold',
     color: '#FFF',
-    marginTop: 13,
+    marginTop: 15,
   },
 
 });

@@ -1,6 +1,4 @@
-import {
-    View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard, Platform,
-} from "react-native";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard, Platform, } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
@@ -166,15 +164,17 @@ const styles = StyleSheet.create({
 
     container: {
         flex: 1,
-        alignItems: "center",
-        justifyContent: "center", // Centraliza o conteúdo verticalmente.
-        width: "100%",
-        backgroundColor: "#1C325B",
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center', // Centraliza o conteúdo verticalmente.
+        backgroundColor: '#1C325B',
     },
 
+    // Top Styles.
+
     top: {
-        width: "100%",
-        height: "8%",
+        width: '100%',
+        height: '8%',
         marginBottom: 20,
     },
 
@@ -184,24 +184,26 @@ const styles = StyleSheet.create({
     },
 
     scroll: {
+        width: '100%',
         flex: 1,
-        backgroundColor: "#1C325B",
-        width: "100%",
+        backgroundColor: '#1C325B',
     },
 
+    // Main Styles.
+
     titleCadastro: {
+        fontWeight: 'bold',
         marginBottom: 30,
         fontSize: 35,
-        fontWeight: "bold",
-        color: "#FFF",
+        color: '#FFF',
     },
 
     main: {
-        width: "80%",
-        alignItems: "center", // Centraliza os itens no eixo horizontal.
-        justifyContent: "center", // Garante alinhamento interno centralizado.
+        width: '80%',
+        alignItems: 'center', // Centraliza os itens no eixo horizontal.
+        justifyContent: 'center', // Garante alinhamento interno centralizado.
+        alignSelf: 'center', // Centraliza o próprio main.
         borderRadius: 20,
-        alignSelf: "center", // Centraliza o próprio main.
     },
 
     titleInput: {
@@ -214,33 +216,34 @@ const styles = StyleSheet.create({
     },
 
     textInput: {
-        borderWidth: 1,
         width: '90%',
-        height: 30,
+        borderWidth: 1,
+        height: 40,
         marginBottom: 15,
         borderRadius: 5,
-        padding: 20,
+        padding: 10,
         borderColor: '#73EC8B',
+        color: '#FFF',
     },
 
     botoes: {
-        width: "100%",
-        alignItems: "center",
+        width: '100%',
+        alignItems: 'center',
     },
 
     button: {
-        backgroundColor: "#73EC8B",
-        width: "40%",
-        alignItems: "center",
+        width: '40%',
+        alignItems: 'center',
         height: 30,
         marginBottom: 15,
         borderRadius: 5,
+        backgroundColor: '#73EC8B',
     },
 
     textCadastrar: {
-        color: "#1C325B",
+        fontWeight: 'bold',
         marginTop: 8,
-        fontWeight: "bold",
+        color: '#1C325B',
     },
 });
 
