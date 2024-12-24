@@ -1,16 +1,38 @@
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, } from 'react-native';
-import React, { useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, FlatList, Alert, TouchableWithoutFeedback, Keyboard, } from 'react-native';
+import React, { useState, useEffect } from "react";
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 import Toast from "react-native-toast-message";
 import { database } from "../../../firebaseConnection"; // Importando a connection.
-import { ref, set, get, } from "firebase/database";
+import { ref, set, get, remove, } from "firebase/database";
 
 const Locais = () => {
     const navigation = useNavigation();
-
     const [local, setLocal] = useState("");
+    const [locais, setLocais] = useState([]);
 
+    // Função para fechar o teclado.
+    const dismissKeyboard = () => {
+        Keyboard.dismiss(); // Fecha o teclado.
+    };
+
+    // Função para carregar os locais cadastrados.
+    async function loadLocais() {
+        const locaisRef = ref(database, "Locais");
+        const snapshot = await get(locaisRef);
+        if (snapshot.exists()) {
+            setLocais(Object.keys(snapshot.val()));
+        } else {
+            setLocais([]);
+        }
+    }
+
+    useEffect(() => {
+        loadLocais();
+    }, []);
+
+
+    // Função para cadastrar locais.
     async function handleCadastroLocal() {
         if (local !== "") {
             const cadastroLocalRef = ref(database, `Locais/${local}`); // Usar nome do local como key.
@@ -41,6 +63,7 @@ const Locais = () => {
                 });
 
                 setLocal("");
+                loadLocais();// Recarrega a lista de locais.
 
             } catch (error) {
                 Toast.show({
@@ -61,6 +84,48 @@ const Locais = () => {
         }
     }
 
+
+    // Função para deletar driver.
+    async function handleDeleteLocal(LocaisLocal) {
+        Alert.alert(
+            "Confirmação", // Título do alerta.
+            `Deseja deletar o local ${LocaisLocal}?`,
+            [
+                {
+                    text: "Cancelar",
+                    style: "cancel", // Define o botão de cancelar.
+                },
+                {
+                    text: "Deletar",
+                    style: "destructive", // Estiliza como botão de ação destrutiva.
+                    onPress: async () => { // Função executada ao confirmar.
+                        const locaisRef = ref(database, `Locais/${LocaisLocal}`);
+                        try {
+                            await remove(locaisRef);
+                            Toast.show({
+                                type: "success",
+                                position: "top",
+                                text1: "Local deletado com sucesso!",
+                                visibilityTime: 1000,
+                            });
+                            loadLocais(); // Recarrega a lista de locais.
+                        } catch (error) {
+                            Toast.show({
+                                type: "error",
+                                position: "top",
+                                text1: "Erro ao deletar. Tente novamente.",
+                                visibilityTime: 1000,
+                            });
+                            console.error("Erro ao deletar do banco:", error);
+                        }
+                    },
+                },
+            ],
+            { cancelable: true } // Permite cancelar o alerta clicando fora.
+        );
+    }
+
+
     return (
         <View style={styles.container}>
 
@@ -72,29 +137,46 @@ const Locais = () => {
                 </View>
             </View>
 
-            <View style={styles.main}>
-                <View style={styles.cadastrarLocal}>
-                    <Text style={styles.titleInput}>Nome do local</Text>
-                    <TextInput
-                        style={styles.textInput}
-                        placeholder="Local"
-                        value={local}
-                        onChangeText={(text) => setLocal(text)}
-                        maxLength={15}
-                        placeholderTextColor='#FFF'
-                    />
+            <TouchableWithoutFeedback onPress={dismissKeyboard}>
+                <View style={{ flex: 1, width: '100%'}}>
+                    <View style={styles.main}>
+                        <View style={styles.cadastrarLocal}>
+                            <Text style={styles.titleInput}>Nome do local</Text>
+                            <TextInput
+                                style={styles.textInput}
+                                placeholder="Local"
+                                value={local}
+                                onChangeText={(text) => setLocal(text)}
+                                maxLength={15}
+                                placeholderTextColor='#FFF'
+                            />
+                        </View>
+
+                        {/* Botão */}
+                        <View style={styles.botoes}>
+                            <TouchableOpacity onPress={handleCadastroLocal} style={styles.button}>
+                                <Text style={styles.textCadastrar}>Cadastrar</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
+                    {/* Lista de drivers */}
+                    <View style={styles.locaisList}>
+                        <Text style={styles.listTitle}>Locais Cadastrados:</Text>
+                        <FlatList
+                            data={locais}
+                            keyExtractor={(item) => item}
+                            renderItem={({ item }) => (
+                                <View style={styles.locaisItem}>
+                                    <Text style={styles.locaisText}>{item}</Text>
+                                    <TouchableOpacity onPress={() => handleDeleteLocal(item)} style={styles.deleteButton}>
+                                        <Feather name="trash" size={20} color="#FFF" />
+                                    </TouchableOpacity>
+                                </View>
+                            )} />
+                    </View>
                 </View>
-
-                {/* Botão */}
-                <View style={styles.botoes}>
-                    <TouchableOpacity onPress={handleCadastroLocal} style={styles.button}>
-                        <Text style={styles.textCadastrar}>Cadastrar</Text>
-                    </TouchableOpacity>
-                </View>
-
-
-            </View>
-
+            </TouchableWithoutFeedback>
 
         </View>
     );
@@ -174,6 +256,44 @@ const styles = StyleSheet.create({
         color: '#1C325B',
         marginTop: 8,
         fontWeight: 'bold',
+    },
+
+    // Lista Locais.
+    locaisList: {
+        flex: 1, // Expande para ocupar o espaço disponível.
+        width: '100%',
+        alignItems: 'center',
+        marginTop: 20,
+    },
+
+    listTitle: {
+        fontSize: 18,
+        marginBottom: 10,
+        color: '#FFF',
+    },
+
+    locaisItem: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        alignSelf: 'center', // Centraliza cada item na lista.
+        width: '90%',
+        padding: 10,
+        borderRadius: 5,
+        marginBottom: 10,
+        backgroundColor: '#FFF',
+    },
+
+    locaisText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#1C325B',
+    },
+
+    deleteButton: {
+        padding: 5,
+        borderRadius: 5,
+        backgroundColor: '#E63946',
     },
 
 });

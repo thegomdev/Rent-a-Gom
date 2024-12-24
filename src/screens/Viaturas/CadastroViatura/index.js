@@ -88,7 +88,7 @@ const CadastroViaturas = () => {
                                 placeholder="Marca"
                                 value={marca}
                                 onChangeText={(text) => setMarca(text)}
-                                maxLength={15}
+                                maxLength={10}
                                 placeholderTextColor='#FFF'
                             />
                         </View>
@@ -101,7 +101,7 @@ const CadastroViaturas = () => {
                                 placeholder="Modelo"
                                 value={modelo}
                                 onChangeText={(text) => setModelo(text)}
-                                maxLength={15}
+                                maxLength={10}
                                 placeholderTextColor='#FFF'
                             />
                         </View>
@@ -114,7 +114,7 @@ const CadastroViaturas = () => {
                                 placeholder="Matrícula"
                                 value={matricula}
                                 onChangeText={(text) => setMatricula(text)}
-                                maxLength={15}
+                                maxLength={9}
                                 placeholderTextColor='#FFF'
                             />
                         </View>
@@ -127,7 +127,7 @@ const CadastroViaturas = () => {
                                 placeholder="Ano"
                                 value={ano}
                                 onChangeText={(text) => setAno(text)}
-                                maxLength={15}
+                                maxLength={4}
                                 placeholderTextColor='#FFF'
                                 keyboardType="numeric"
                             />
@@ -138,10 +138,10 @@ const CadastroViaturas = () => {
                             <Text style={styles.titleInput}>Kms</Text>
                             <TextInput
                                 style={styles.textInput}
-                                placeholder="Kms"
+                                placeholder="Kms"d
                                 value={kms}
                                 onChangeText={(text) => setKms(text)}
-                                maxLength={15}
+                                maxLength={7}
                                 placeholderTextColor='#FFF'
                                 keyboardType="numeric"
                             />
@@ -171,7 +171,6 @@ const styles = StyleSheet.create({
     },
 
     // Top Styles.
-
     top: {
         width: '100%',
         height: '8%',
@@ -190,7 +189,6 @@ const styles = StyleSheet.create({
     },
 
     // Main Styles.
-
     titleCadastro: {
         fontWeight: 'bold',
         marginBottom: 30,

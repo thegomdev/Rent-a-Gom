@@ -168,6 +168,7 @@ const styles = StyleSheet.create({
 
     // Estilos da lista.
     listViaturas: {
+        flex: 1, // Expande para ocupar o espaço disponível.
         width: '100%',
         height: '100%',
         alignItems: 'center',

@@ -43,6 +43,7 @@ const Home = () => {
 };
 
 const styles = StyleSheet.create({
+  
   container: {
     flex: 1,
     alignItems: 'center',
@@ -50,6 +51,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#1C325B',
   },
 
+  // Top Styles.
   top: {
     alignItems: 'center',
     marginTop: 80,
@@ -57,11 +59,12 @@ const styles = StyleSheet.create({
   },
 
   text1: {
-    fontSize: 60,
     fontWeight: 'bold',
+    fontSize: 60,
     color: '#FFF',
   },
 
+  // Bottons Styles.
   bottons: {
     width: '100%',
     alignItems: 'center',
@@ -75,15 +78,15 @@ const styles = StyleSheet.create({
   buttonSingle: {
     width: '50%',
     alignItems: 'center',
-    backgroundColor: '#73EC8B',
     borderRadius: 15,
     height: 60,
     marginBottom: 15,
+    backgroundColor: '#73EC8B',
   },
 
   textButtons: {
-    fontSize: 25,
     fontWeight: 'bold',
+    fontSize: 25,
     color: '#FFF',
     marginTop: 15,
   },

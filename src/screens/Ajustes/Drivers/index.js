@@ -1,16 +1,38 @@
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, } from 'react-native';
-import React, { useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, FlatList, Alert, TouchableWithoutFeedback, Keyboard, } from 'react-native';
+import React, { useState, useEffect } from "react";
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 import Toast from "react-native-toast-message";
 import { database } from "../../../firebaseConnection"; // Importando a connection.
-import { ref, set, get, } from "firebase/database";
+import { ref, set, get, remove, } from "firebase/database";
 
 const Drivers = () => {
     const navigation = useNavigation();
-
     const [nome, setNome] = useState("");
+    const [drivers, setDrivers] = useState([]);
 
+    // Função para fechar o teclado.
+    const dismissKeyboard = () => {
+        Keyboard.dismiss(); // Fecha o teclado.
+    };
+
+    // Função para carregar os drivers cadastrados.
+    async function loadDrivers() {
+        const driversRef = ref(database, "Drivers");
+        const snapshot = await get(driversRef);
+        if (snapshot.exists()) {
+            setDrivers(Object.keys(snapshot.val()));
+        } else {
+            setDrivers([]);
+        }
+    }
+
+    useEffect(() => {
+        loadDrivers();
+    }, []);
+
+
+    // Função para cadastrar drivers.
     async function handleCadastroDriver() {
         if (nome !== "") {
             const cadastroDriverRef = ref(database, `Drivers/${nome}`); // Usar o nome como key.
@@ -41,6 +63,7 @@ const Drivers = () => {
                 });
 
                 setNome("");
+                loadDrivers(); // Recarrega a lista de drivers.
 
             } catch (error) {
                 Toast.show({
@@ -61,6 +84,47 @@ const Drivers = () => {
         }
     }
 
+
+    // Função para deletar driver.
+    async function handleDeleteDriver(driverName) {
+        Alert.alert(
+            "Confirmação", // Título do alerta.
+            `Deseja deletar o driver ${driverName}?`,
+            [
+                {
+                    text: "Cancelar",
+                    style: "cancel", // Define o botão de cancelar.
+                },
+                {
+                    text: "Deletar",
+                    style: "destructive", // Estiliza como botão de ação destrutiva.
+                    onPress: async () => { // Função executada ao confirmar.
+                        const driverRef = ref(database, `Drivers/${driverName}`);
+                        try {
+                            await remove(driverRef);
+                            Toast.show({
+                                type: "success",
+                                position: "top",
+                                text1: "Driver deletado com sucesso!",
+                                visibilityTime: 1000,
+                            });
+                            loadDrivers(); // Recarrega a lista de drivers.
+                        } catch (error) {
+                            Toast.show({
+                                type: "error",
+                                position: "top",
+                                text1: "Erro ao deletar. Tente novamente.",
+                                visibilityTime: 1000,
+                            });
+                            console.error("Erro ao deletar do banco:", error);
+                        }
+                    },
+                },
+            ],
+            { cancelable: true } // Permite cancelar o alerta clicando fora.
+        );
+    }
+
     return (
         <View style={styles.container}>
 
@@ -72,29 +136,46 @@ const Drivers = () => {
                 </View>
             </View>
 
-            <View style={styles.main}>
-                <View style={styles.cadastrarDriver}>
-                    <Text style={styles.titleInput}>Nome</Text>
-                    <TextInput
-                        style={styles.textInput}
-                        placeholder="Nome"
-                        value={nome}
-                        onChangeText={(text) => setNome(text)}
-                        maxLength={15}
-                        placeholderTextColor='#FFF'
-                    />
+            <TouchableWithoutFeedback onPress={dismissKeyboard}>
+                <View style={{ flex: 1, width: '100%' }}>
+                    <View style={styles.main}>
+                        <View style={styles.cadastrarDriver}>
+                            <Text style={styles.titleInput}>Nome</Text>
+                            <TextInput
+                                style={styles.textInput}
+                                placeholder="Nome"
+                                value={nome}
+                                onChangeText={(text) => setNome(text)}
+                                maxLength={15}
+                                placeholderTextColor='#FFF'
+                            />
+                        </View>
+
+                        {/* Botão */}
+                        <View style={styles.botoes}>
+                            <TouchableOpacity onPress={handleCadastroDriver} style={styles.button}>
+                                <Text style={styles.textCadastrar}>Cadastrar</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
+                    {/* Lista de drivers */}
+                    <View style={styles.driverList}>
+                        <Text style={styles.listTitle}>Drivers Cadastrados:</Text>
+                        <FlatList
+                            data={drivers}
+                            keyExtractor={(item) => item}
+                            renderItem={({ item }) => (
+                                <View style={styles.driverItem}>
+                                    <Text style={styles.driverText}>{item}</Text>
+                                    <TouchableOpacity onPress={() => handleDeleteDriver(item)} style={styles.deleteButton}>
+                                        <Feather name="trash" size={20} color="#FFF" />
+                                    </TouchableOpacity>
+                                </View>
+                            )} />
+                    </View>
                 </View>
-
-                {/* Botão */}
-                <View style={styles.botoes}>
-                    <TouchableOpacity onPress={handleCadastroDriver} style={styles.button}>
-                        <Text style={styles.textCadastrar}>Cadastrar</Text>
-                    </TouchableOpacity>
-                </View>
-
-
-            </View>
-
+            </TouchableWithoutFeedback>
 
         </View>
     );
@@ -171,9 +252,47 @@ const styles = StyleSheet.create({
     },
 
     textCadastrar: {
-        color: '#1C325B',
         marginTop: 8,
         fontWeight: 'bold',
+        color: '#1C325B',
+    },
+
+    // Lista Drivers.
+    driverList: {
+        flex: 1, // Expande para ocupar o espaço disponível.
+        width: '100%',
+        alignItems: 'center',
+        marginTop: 20,
+    },
+
+    listTitle: {
+        fontSize: 18,
+        marginBottom: 10,
+        color: '#FFF',
+    },
+
+    driverItem: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        alignSelf: 'center', // Centraliza cada item na lista.
+        width: '90%',
+        padding: 10,
+        borderRadius: 5,
+        marginBottom: 10,
+        backgroundColor: '#FFF',
+    },
+
+    driverText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#1C325B',
+    },
+
+    deleteButton: {
+        padding: 5,
+        borderRadius: 5,
+        backgroundColor: '#E63946',
     },
 
 });

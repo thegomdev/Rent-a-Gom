@@ -104,19 +104,41 @@ const EditarViatura = ({ route, navigation }) => {
                     <View style={styles.main}>
                         <View style={styles.form}>
                             <Text style={styles.text}>Marca:</Text>
-                            <TextInput style={styles.input} value={marca} onChangeText={setMarca} />
+                            <TextInput
+                                style={styles.input}
+                                value={marca}
+                                onChangeText={setMarca}
+                                maxLength={9} />
 
                             <Text style={styles.text}>Modelo:</Text>
-                            <TextInput style={styles.input} value={modelo} onChangeText={setModelo} />
+                            <TextInput
+                                style={styles.input}
+                                value={modelo}
+                                onChangeText={setModelo}
+                                maxLength={10} />
 
                             <Text style={styles.text}>Matrícula:</Text>
-                            <TextInput style={styles.input} value={matricula} onChangeText={setMatricula} />
+                            <TextInput
+                                style={styles.input}
+                                value={matricula}
+                                onChangeText={setMatricula}
+                                maxLength={8} />
 
                             <Text style={styles.text}>Km's:</Text>
-                            <TextInput style={styles.input} value={kms} onChangeText={setKms} />
+                            <TextInput
+                                style={styles.input}
+                                value={kms}
+                                onChangeText={setKms}
+                                maxLength={7}
+                                keyboardType="numeric" />
 
                             <Text style={styles.text}>Ano:</Text>
-                            <TextInput style={styles.input} value={ano} onChangeText={setAno} />
+                            <TextInput
+                                style={styles.input}
+                                value={ano}
+                                onChangeText={setAno}
+                                maxLength={4}
+                                keyboardType="numeric" />
                         </View>
 
                         <View style={styles.buttons}>
