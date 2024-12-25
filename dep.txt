@@ -15,3 +15,8 @@ npm install firebase
 Notificações Toast
 npm install react-native-toast-message
 
+ModalSelector
+npm install react-native-modal-selector
+
+
+

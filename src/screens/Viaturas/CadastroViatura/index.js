@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 import { database } from "../../../firebaseConnection"; // Importando a connection.
-import { ref, push, set } from "firebase/database"; // Importando as funções do firebase.
+import { ref, set } from "firebase/database"; // Importando as funções do firebase.
 import Toast from "react-native-toast-message";
 
 const CadastroViaturas = () => {
@@ -21,10 +21,9 @@ const CadastroViaturas = () => {
 
     async function handleCadastro() {
         if (marca !== "" && modelo !== "" && matricula !== "" && ano !== "" && kms !== "") {
-            const cadastroViaturaRef = ref(database, "Viaturas");
-            const newCadastroViaturaRef = push(cadastroViaturaRef);
+            const viaturaRef = ref(database, "Viaturas/" + matricula);
 
-            await set(newCadastroViaturaRef, {
+            await set(viaturaRef, {
                 Marca: marca,
                 Modelo: modelo,
                 Matrícula: matricula,
@@ -65,7 +64,7 @@ const CadastroViaturas = () => {
                 <TouchableOpacity
                     style={styles.voltarTop}
                     onPress={() => navigation.goBack()}>
-                    <Feather name="corner-down-left" size={30} color={"#73EC8B"} />
+                    <Feather name="arrow-left" size={30} color={"#DBF227"} />
                 </TouchableOpacity>
             </View>
 
@@ -87,7 +86,7 @@ const CadastroViaturas = () => {
                                 style={styles.textInput}
                                 placeholder="Marca"
                                 value={marca}
-                                onChangeText={(text) => setMarca(text)}
+                                onChangeText={(text) => setMarca(text.toUpperCase())}
                                 maxLength={10}
                                 placeholderTextColor='#FFF'
                             />
@@ -100,7 +99,7 @@ const CadastroViaturas = () => {
                                 style={styles.textInput}
                                 placeholder="Modelo"
                                 value={modelo}
-                                onChangeText={(text) => setModelo(text)}
+                                onChangeText={(text) => setModelo(text.toUpperCase())}
                                 maxLength={10}
                                 placeholderTextColor='#FFF'
                             />
@@ -113,7 +112,7 @@ const CadastroViaturas = () => {
                                 style={styles.textInput}
                                 placeholder="Matrícula"
                                 value={matricula}
-                                onChangeText={(text) => setMatricula(text)}
+                                onChangeText={(text) => setMatricula(text.toUpperCase())}
                                 maxLength={9}
                                 placeholderTextColor='#FFF'
                             />
@@ -138,7 +137,7 @@ const CadastroViaturas = () => {
                             <Text style={styles.titleInput}>Kms</Text>
                             <TextInput
                                 style={styles.textInput}
-                                placeholder="Kms"d
+                                placeholder="Kms" d
                                 value={kms}
                                 onChangeText={(text) => setKms(text)}
                                 maxLength={7}
@@ -167,7 +166,7 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center', // Centraliza o conteúdo verticalmente.
-        backgroundColor: '#1C325B',
+        backgroundColor: '#042940',
     },
 
     // Top Styles.
@@ -185,7 +184,7 @@ const styles = StyleSheet.create({
     scroll: {
         width: '100%',
         flex: 1,
-        backgroundColor: '#1C325B',
+        backgroundColor: '#042940',
     },
 
     // Main Styles.
@@ -220,7 +219,7 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         borderRadius: 5,
         padding: 10,
-        borderColor: '#73EC8B',
+        borderColor: '#DBF227',
         color: '#FFF',
     },
 
@@ -235,13 +234,13 @@ const styles = StyleSheet.create({
         height: 30,
         marginBottom: 15,
         borderRadius: 5,
-        backgroundColor: '#73EC8B',
+        backgroundColor: '#DBF227',
     },
 
     textCadastrar: {
         fontWeight: 'bold',
         marginTop: 8,
-        color: '#1C325B',
+        color: '#042940',
     },
 });
 

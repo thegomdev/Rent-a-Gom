@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard, Platform, } from 'react-native';
 import { database } from '../../../firebaseConnection';
-import { ref, update, remove } from 'firebase/database';
+import { ref, update, remove, set } from 'firebase/database';
 import { Feather } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
 
@@ -19,26 +19,62 @@ const EditarViatura = ({ route, navigation }) => {
     };
 
     const updateViatura = () => {
-        // Verifica se todos os campos estão preenchidos antes de salvar.
         if (marca !== '' && modelo !== '' && matricula !== '' && ano !== '' && kms !== '') {
-            // Define a referência para o registro específico da viatura no banco de dados.
-            const viaturaRef = ref(database, `Viaturas/${viatura.id}`);
-            update(viaturaRef, {
-                Marca: marca,
-                Modelo: modelo,
-                Matrícula: matricula,
-                Kms: kms,
-                Ano: ano,
-            });
-            Toast.show({
-                type: 'success',
-                position: 'top',
-                text1: 'Viatura Atualizada!',
-                visibilityTime: 1000,
-            });
+            // Verifica se a matrícula foi alterada.
+            if (matricula !== viatura.Matrícula) {
+                // Remove a viatura com a matrícula antiga.
+                const viaturaRefOld = ref(database, `Viaturas/${viatura.Matrícula}`);
+                remove(viaturaRefOld)
+                    .then(() => {
+                        // Adiciona a viatura com a nova matrícula como chave.
+                        const viaturaRefNew = ref(database, `Viaturas/${matricula}`);
+                        set(viaturaRefNew, {
+                            Marca: marca,
+                            Modelo: modelo,
+                            Matrícula: matricula,
+                            Kms: kms,
+                            Ano: ano,
+                        });
 
-            navigation.goBack();
+                        Toast.show({
+                            type: 'success',
+                            position: 'top',
+                            text1: 'Viatura Atualizada!',
+                            visibilityTime: 1000,
+                        });
 
+                        navigation.goBack();
+                    })
+                    .catch((error) => {
+                        console.error('Erro ao remover a viatura antiga:', error);
+                        Toast.show({
+                            type: 'error',
+                            position: 'top',
+                            text1: 'Erro ao atualizar!',
+                            text2: 'Tente novamente.',
+                            visibilityTime: 2000,
+                        });
+                    });
+            } else {
+                // Se a matrícula não foi alterada, apenas atualize os dados.
+                const viaturaRef = ref(database, `Viaturas/${viatura.Matrícula}`);
+                update(viaturaRef, {
+                    Marca: marca,
+                    Modelo: modelo,
+                    Matrícula: matricula,
+                    Kms: kms,
+                    Ano: ano,
+                });
+
+                Toast.show({
+                    type: 'success',
+                    position: 'top',
+                    text1: 'Viatura Atualizada!',
+                    visibilityTime: 1000,
+                });
+
+                navigation.goBack();
+            }
         } else {
             Toast.show({
                 type: 'error',
@@ -48,7 +84,7 @@ const EditarViatura = ({ route, navigation }) => {
                 visibilityTime: 2000,
             });
         }
-    }
+    };
 
 
 
@@ -90,7 +126,7 @@ const EditarViatura = ({ route, navigation }) => {
                 <View>
                     <TouchableOpacity style={styles.voltarTop}
                         onPress={() => navigation.goBack()}>
-                        <Feather name="corner-down-left" size={35} color={"#73EC8B"} />
+                        <Feather name="arrow-left" size={35} color={"#DBF227"} />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -107,21 +143,21 @@ const EditarViatura = ({ route, navigation }) => {
                             <TextInput
                                 style={styles.input}
                                 value={marca}
-                                onChangeText={setMarca}
+                                onChangeText={(text) => setMarca(text.toUpperCase())}
                                 maxLength={9} />
 
                             <Text style={styles.text}>Modelo:</Text>
                             <TextInput
                                 style={styles.input}
                                 value={modelo}
-                                onChangeText={setModelo}
+                                onChangeText={(text) => setModelo(text.toUpperCase())}
                                 maxLength={10} />
 
                             <Text style={styles.text}>Matrícula:</Text>
                             <TextInput
                                 style={styles.input}
                                 value={matricula}
-                                onChangeText={setMatricula}
+                                onChangeText={(text) => setMatricula(text.toUpperCase())}
                                 maxLength={8} />
 
                             <Text style={styles.text}>Km's:</Text>
@@ -165,7 +201,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center', // Centraliza o conteúdo verticalmente.
         alignItems: 'center',
-        backgroundColor: '#1C325B',
+        backgroundColor: '#042940',
         width: '100%',
     },
 
@@ -173,13 +209,13 @@ const styles = StyleSheet.create({
     top: {
         width: '100%',
         height: '12%',
-        backgroundColor: '#1C325B',
+        backgroundColor: '#042940',
     },
 
     scroll: {
         flex: 1,
         width: '100%',
-        backgroundColor: "#1C325B",
+        backgroundColor: '#042940',
     },
 
     voltarTop: {
@@ -214,7 +250,7 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         borderRadius: 5,
         color: '#FFF',
-        borderColor: '#73EC8B',
+        borderColor: '#DBF227',
     },
 
     // Buttons Styles.
@@ -228,12 +264,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 15,
         borderRadius: 5,
-        backgroundColor: '#73EC8B',
+        backgroundColor: '#DBF227',
     },
 
     buttonText: {
         fontSize: 18,
-        color: '#1C325B',
+        color: '#042940',
     },
 
     buttonDelete: {

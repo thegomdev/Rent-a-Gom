@@ -131,7 +131,7 @@ const Drivers = () => {
             <View style={styles.top}>
                 <View style={styles.voltar}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Feather name="corner-down-left" size={25} color={'#73EC8B'} />
+                        <Feather name="arrow-left" size={30} color={'#DBF227'} />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         width: '100%',
-        backgroundColor: '#1C325B',
+        backgroundColor: '#042940',
     },
 
     // Estilos do top.
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         borderRadius: 5,
         padding: 10,
-        borderColor: '#73EC8B',
+        borderColor: '#DBF227',
         color: '#FFF',
     },
 
@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        backgroundColor: '#73EC8B',
+        backgroundColor: '#DBF227',
         width: '40%',
         alignItems: 'center',
         height: 30,
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
     textCadastrar: {
         marginTop: 8,
         fontWeight: 'bold',
-        color: '#1C325B',
+        color: '#042940',
     },
 
     // Lista Drivers.

@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     width: '100%',
-    backgroundColor: '#1C325B',
+    backgroundColor: '#042940',
   },
 
   // Top Styles.
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     height: 60,
     marginBottom: 15,
-    backgroundColor: '#73EC8B',
+    backgroundColor: '#DBF227',
   },
 
   textButtons: {
